@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import Button from "../components/Button";
 import Formulario from "../components/Formulario";
 import Layout from "../components/Layout";
@@ -19,20 +20,38 @@ export default function Home() {
     console.log(cliente.nome);
   }
 
+  function SaveClient(cliente: Cliente) {
+    console.log(cliente)
+  }
+
+  const [visivel, setVisivel] = useState<"tabela" | "form">("tabela");
+
   return (
     <div className={`flex justify-center items-center h-screen text-white`}>
       <Layout title="Bem vindo ao cadastro">
-        <TableClient
-          clientes={clientes}
-          SelectedClient={SelectedAction}
-          DeletedClient={DeletedClient}
-        ></TableClient>
+        {visivel === 'tabela' ? (
+        <>
+          <TableClient
+            clientes={clientes}
+            SelectedClient={SelectedAction}
+            DeletedClient={DeletedClient}
+          ></TableClient>
 
-        <Formulario cliente={clientes[1]}>  </Formulario>
-
-        <div className={`flex justify-end`}>
-          <Button>Novo Usuário</Button>
+          <div className={`flex justify-end mt-3`}>
+          {/* Seta o botão para alternar para o form */}
+          <Button onClick={() => setVisivel('form')}>
+            Novo Usuário
+          </Button>
         </div>
+          </>
+        ) : (
+          <Formulario 
+            cliente={clientes[1]}
+            changeClient={SaveClient}
+            cancel={()=>{setVisivel('tabela')}} 
+          /> 
+        )}
+        
       </Layout>
     </div>
   );

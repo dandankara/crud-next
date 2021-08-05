@@ -1,5 +1,7 @@
 interface FormProps {
   cliente: Cliente
+  changeClient?: (cliente: Cliente) => void
+  cancel?: () => void
 }
 
 import React, {useState} from 'react'
@@ -23,8 +25,11 @@ export default function Formulario(props:FormProps) {
       <Entry text="Idade" valor={Idade} tipo="number" ValueChanged={setIdade}/>
 
       <div className={`flex`}>
-        <Button> {id ? 'Editar' : 'Salvar' } </Button>
-        <Button> Cancelar </Button>
+        <Button onClick={() => props.changeClient?.(new Cliente(Nome, Idade, id))}> 
+          {id ? 'Editar' : 'Salvar' }
+           
+        </Button>
+        <Button onClick={props.cancel}> Cancelar </Button>
       </div>
     </div>
   )
