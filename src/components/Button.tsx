@@ -1,5 +1,5 @@
 interface BotaoProps {
-  children: any //Se quiser passar qualquer coisa pra cá, pode
+  children?: any //Se quiser passar qualquer coisa pra cá, pode
   className?: any
   onClick?:() => void
 }
