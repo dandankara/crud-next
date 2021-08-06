@@ -14,16 +14,26 @@ export default function Home() {
 
   function SelectedAction(cliente: Cliente) {
     console.log(cliente.nome);
+    //Vou chamar o SetCliente onde ele pega a props empty da tabela cliente e seta pra vazio o form
+    setcliente(cliente)
+    setVisivel('form')
   }
 
   function DeletedClient(cliente: Cliente) {
     console.log(cliente.nome);
   }
 
-  function SaveClient(cliente: Cliente) {
+  function SaveClient() {
     console.log(cliente)
+    setVisivel('tabela')
   }
 
+  function NewClient() {
+    setcliente(Cliente.empty())
+    setVisivel('form')
+  }
+  
+  const [cliente, setcliente] = useState<Cliente>(Cliente.empty()) //Pega o get empty da TableClient
   const [visivel, setVisivel] = useState<"tabela" | "form">("tabela");
 
   return (
@@ -39,14 +49,14 @@ export default function Home() {
 
           <div className={`flex justify-end mt-3`}>
           {/* Seta o botão para alternar para o form */}
-          <Button onClick={() => setVisivel('form')}>
+          <Button onClick={NewClient}>
             Novo Usuário
           </Button>
         </div>
           </>
         ) : (
           <Formulario 
-            cliente={clientes[1]}
+            cliente={cliente}
             changeClient={SaveClient}
             cancel={()=>{setVisivel('tabela')}} 
           /> 

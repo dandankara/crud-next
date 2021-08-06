@@ -27,8 +27,8 @@ export default function Formulario(props:FormProps) {
       <div className={`flex`}>
         <Button onClick={() => props.changeClient?.(new Cliente(Nome, Idade, id))}> 
           {id ? 'Editar' : 'Salvar' }
-           
         </Button>
+        
         <Button onClick={props.cancel}> Cancelar </Button>
       </div>
     </div>
