@@ -1,16 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "../components/Button";
 import Formulario from "../components/Formulario";
 import Layout from "../components/Layout";
 import TableClient from "../components/TableClient";
 import Cliente from "../core/Cliente";
+import ClienteRepo from "../core/ClienteRepo";
+import ColecaoCliente from "../backend/db/ColecaoCliente";
 
 export default function Home() {
-  const clientes = [
-    new Cliente("Ana Luiza", 23, "1"),
-    new Cliente("Alexandre", 23, "2"),
-    new Cliente("Maria Clara", 50, "3"),
-  ];
+
+  const repo: ClienteRepo = new ColecaoCliente()
+
+  const [cliente, setcliente] = useState<Cliente>(Cliente.empty()) //Pega o get empty da TableClient
+  const [visivel, setVisivel] = useState<"tabela" | "form">("tabela");
+  const [clientes, setClientes] = useState<Cliente[]> ([])
+
+  useEffect(GetAll, [])
+  
+  function GetAll() {
+    repo.getAll().then(clientes => {
+      setClientes(clientes)
+      setVisivel('tabela')
+    })
+
+  }
 
   function SelectedAction(cliente: Cliente) {
     console.log(cliente.nome);
@@ -23,9 +36,10 @@ export default function Home() {
     console.log(cliente.nome);
   }
 
-  function SaveClient() {
+  async function SaveClient() {
+    await repo.save(cliente)
     console.log(cliente)
-    setVisivel('tabela')
+    GetAll()
   }
 
   function NewClient() {
@@ -33,8 +47,6 @@ export default function Home() {
     setVisivel('form')
   }
   
-  const [cliente, setcliente] = useState<Cliente>(Cliente.empty()) //Pega o get empty da TableClient
-  const [visivel, setVisivel] = useState<"tabela" | "form">("tabela");
 
   return (
     <div className={`flex justify-center items-center h-screen text-white`}>

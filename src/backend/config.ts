@@ -3,9 +3,9 @@ import 'firebase/firestore'
 
 if(!firebase.apps.length) {
   firebase.initializeApp({
-    ApiKey: process.env.NEXT_PUBLIC_FIREBASE_APIKEY,
-    AuthDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-    ProjectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+    API_KEY: process.env.NEXT_PUBLIC_FIREBASE_APIKEY,
+    AUTH_DOMAIN: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+    PROJECT_ID: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
   })
 }
 
